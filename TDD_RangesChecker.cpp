@@ -5,5 +5,6 @@ int main(){
     test_rangesDetection();
     test_countMeasurenments();
     test_HighFidelity();
+    test_ChargeandDischargeSensor();
     return 0;
 }

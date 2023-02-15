@@ -91,13 +91,66 @@ void test_countMeasurenments(){
 void test_HighFidelity(){
     std::cout <<"[test_HighFidelity]--------------TEST STARTED--------------\n";
 
-    std::cout <<"[test_HighFidelity]-----Error Reading\n";
+    std::cout <<"[test_HighFidelity]-----Converting Result\n";
     std::vector<int> testVector1 = {0,1,0,0,0,1,1,1,1,0,1,0};//1146
     
     int expectedOutput = 3;
-    int actualOutput = convertBitsToAmp(testVector1);
+    int actualOutput = convertReadingtoAmp(testVector1);
     assert(expectedOutput == actualOutput);
 
-    std::cout <<"[test_HighFidelity]-----Converting Result\n";
+    std::cout <<"[test_HighFidelity]-----reading 0 amps\n";
+    std::vector<int> testVector2 = {0,0,0,0,0,0,0,0,0,0,0,0};//0
+    
+    expectedOutput = 0;
+    actualOutput = convertReadingtoAmp(testVector2);
+    assert(expectedOutput == actualOutput);
+
+    std::cout <<"[test_HighFidelity]-----Error Reading\n";
+    std::vector<int> testVector3 = {1,1,1,1,1,1,1,1,1,1,1,1};//4095
+    
+    expectedOutput = -1;
+    actualOutput = convertReadingtoAmp(testVector3);
+    assert(expectedOutput == actualOutput);
+
     std::cout <<"[test_HighFidelity]--------------TEST OK--------------\n";
+}
+
+void test_ChargeandDischargeSensor(){
+    std::cout <<"[test_ChargeandDischargeSensor]--------------TEST STARTED--------------\n";
+
+    std::cout <<"[test_ChargeandDischargeSensor]-----reading -15 amps\n";
+    std::vector<int> testVector1 = {0,0,0,0,0,0,0,0,0,0,0,0};//0
+    
+    int expectedOutput = 15;
+    int actualOutput = measureChargeandDischargeCurrent(testVector1);
+    assert(expectedOutput == actualOutput);
+
+    std::cout <<"[test_ChargeandDischargeSensor]-----reading 15 amps\n";
+    std::vector<int> testVector2 = {0,1,1,1,1,1,1,1,1,1};//1022
+    
+    expectedOutput = 15;
+    actualOutput = measureChargeandDischargeCurrent(testVector2);
+    assert(expectedOutput == actualOutput);
+
+    std::cout <<"[test_ChargeandDischargeSensor]-----reading 0 amps\n";
+    std::vector<int> testVector3 = {1,1,1,1,1,1,1,1,1,0};//511
+    
+    expectedOutput = 0;
+    actualOutput = measureChargeandDischargeCurrent(testVector3);
+    assert(expectedOutput == actualOutput);
+
+    std::cout <<"[test_ChargeandDischargeSensor]-----reading 8 amps\n";
+    std::vector<int> testVector4 = {0,1,1,1,0,1,1,1,0,0};//238
+    
+    expectedOutput = 8;
+    actualOutput = measureChargeandDischargeCurrent(testVector4);
+    assert(expectedOutput == actualOutput);
+
+     std::cout <<"[test_ChargeandDischargeSensor]-----error reading\n";
+    std::vector<int> testVector5 = {1,1,1,1,1,1,1,1,1,1};//1023
+    
+    expectedOutput = -1;
+    actualOutput = measureChargeandDischargeCurrent(testVector5);
+    assert(expectedOutput == actualOutput);
+    std::cout <<"[test_ChargeandDischargeSensor]--------------TEST OK--------------\n";
 }

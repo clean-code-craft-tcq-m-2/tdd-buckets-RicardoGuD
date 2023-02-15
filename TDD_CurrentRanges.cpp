@@ -93,8 +93,68 @@ void captureCurrentMeasurenmentsRanges(std::vector<int> measurenments)
     }
 }
 
-int convertBitsToAmp(std::vector<int> measurenmentVector)
+int convertReadingtoAmp(std::vector<int> measurenmentVector)
 {
-    int measurenmentInAmp=0;
-    return measurenmentInAmp;
+    int valueInAmps = -1;
+    int measurenmentDecimal = convertBinaryToDec(measurenmentVector);
+    const int maxValue = 4094;
+    if(isValidMeasurenment(measurenmentDecimal, maxValue))
+    {
+        valueInAmps = convertDecToAmp(measurenmentDecimal);
+    }
+    return valueInAmps;
+}
+
+int convertBinaryToDec(std::vector<int>& measurenmentVector)
+{
+    int binToDecConvertion = 0;
+    int binaryPositionValue = 1;
+    
+    for(uint8_t i=0; i< measurenmentVector.size(); i++)
+    {
+        if (measurenmentVector.at(i) == 1)
+        {
+            binToDecConvertion += binaryPositionValue;
+        }
+        binaryPositionValue = binaryPositionValue * 2;
+    }
+    return binToDecConvertion;
+}
+
+bool isValidMeasurenment(int DecValue, int maxValue)
+{
+    return DecValue <= maxValue;
+}
+
+int convertDecToAmp(int DecValue)
+{
+    int valuenInAmps = 0;
+    valuenInAmps = (DecValue * 10)/4094;
+    return std::round(valuenInAmps);
+}
+
+int calculateCurrentMagnitud(int decValue)
+{
+    int currentMagnitud = 0;
+    if(decValue >= 511)
+    {
+        decValue = decValue - 511;
+    }
+    else{
+        decValue = 511 - decValue;   
+    }
+    currentMagnitud = (decValue * 15)/511;
+    return std::round(currentMagnitud);
+}
+
+int measureChargeandDischargeCurrent(std::vector<int> measurenmentVector)
+{
+    int currentMagnitud=-1;
+    int measurenmentDecimal = convertBinaryToDec(measurenmentVector);
+    const int maxValue = 1022;
+    if(isValidMeasurenment(measurenmentDecimal, maxValue))
+    {
+        currentMagnitud = calculateCurrentMagnitud(measurenmentDecimal);
+    }
+    return currentMagnitud;
 }
