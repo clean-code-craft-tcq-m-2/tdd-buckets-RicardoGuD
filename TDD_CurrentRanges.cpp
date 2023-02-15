@@ -5,15 +5,14 @@ bool isNewRangeStart(int firstValue, int NextValue)
             NextValue != firstValue+1);
 }
 
-bool isLastMeasurenment(std::vector<int> measurenmentVector, uint8_t currentIndex)
+bool isLastMeasurenment(std::vector<int> measurenmentVector)
 {
-    uint8_t finalMeasurenment = measurenmentVector.size()-1;
-    return finalMeasurenment == currentIndex;
+   return measurenmentVector.size() <= 1;
 }
 
-bool isRangeEnd(int firstValue, int NextValue, uint8_t measurenmentIndex, std::vector<int> vector)
+bool isRangeEnd(int firstValue, int NextValue, std::vector<int> vector)
 {
-    return (isNewRangeStart(firstValue, NextValue) || isLastMeasurenment(vector, measurenmentIndex));
+    return (isNewRangeStart(firstValue, NextValue) || isLastMeasurenment(vector));
 }
 
 void saveRangeLimits(std::pair<int,int>& rangeLimits, std::vector<std::pair<int,int>>& rangesVector, 
@@ -38,18 +37,21 @@ std::vector<std::pair<int,int>> detectRanges(std::vector<int> orderedMeasurenmen
     std::vector<std::pair<int,int>> rangeLimitsVector;
 
     rangeLimits.first = orderedMeasurenments.at(0);
-    uint8_t lastMeasurenment = orderedMeasurenments.size()-1;
+    int nextMeasurenment = 0;
 
-    for(uint8_t measurenmentIndex=0; measurenmentIndex<lastMeasurenment; measurenmentIndex++)
+    while (orderedMeasurenments.size()>0)
     {
-        int nextMeasurenmentIndex = measurenmentIndex + 1;
-        int latestMeasurenment = orderedMeasurenments.at(measurenmentIndex);
-        int nextMeasurenment   = orderedMeasurenments.at(nextMeasurenmentIndex);
+        int latestMeasurenment = orderedMeasurenments.front();
+        if (orderedMeasurenments.size() > 1)
+        {
+            nextMeasurenment = orderedMeasurenments.at(1);
+        }
 
-        if(isRangeEnd(latestMeasurenment, nextMeasurenment, nextMeasurenmentIndex, orderedMeasurenments))
+        if(isRangeEnd(latestMeasurenment, nextMeasurenment,orderedMeasurenments))
         {
             saveRangeLimits(rangeLimits, rangeLimitsVector, latestMeasurenment, nextMeasurenment);
         }
+        orderedMeasurenments.erase(orderedMeasurenments.begin());
     } 
     return rangeLimitsVector;
 }

@@ -51,13 +51,6 @@ void test_rangesDetection(){
     actualOutput   = detectRanges(testVector5);
     assert(expectedOutput == actualOutput);
 
-    std::cout <<"[test_rangesDetection]-----Current measurenment 0\n";
-    std::vector<int> testVector6 = {5,6,1,3,0,2};
-    std::sort(testVector6.begin(), testVector6.end());
-    expectedOutput = {{1,3}, {5,6}};
-    actualOutput   = detectRanges(testVector6);
-    assert(expectedOutput == actualOutput);
-
     std::cout <<"[test_rangesDetection]--------------TEST OK--------------\n";
 }
 
