@@ -8,7 +8,7 @@ bool isLastMeasurenment(std::vector<int> measurenmentVector);
 bool isRangeEnd(int firstValue, int NextValue, std::vector<int> vector);
 void saveRangeLimits(std::pair<int,int>& rangeLimits, std::vector<std::pair<int,int>>& rangesVector,
                      int firstValue, int NextValue);
-
+int convertBitsToAmp(std::vector<int> measurenmentVector);
 std::vector<std::pair<int,int>> detectRanges(std::vector<int> orderedMeasurenments);
 int countMeasurenmentsInRange(std::pair<int,int> rangeLimits, std::vector<int> orderedMeasurenments);
 std::string createOutputString(int rangeStart, int rangeEnd, int readingsFound);

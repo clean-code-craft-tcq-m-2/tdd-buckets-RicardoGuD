@@ -87,3 +87,17 @@ void test_countMeasurenments(){
 
     std::cout <<"[test_countMeasurenments]--------------TEST OK--------------\n";
 }
+
+void test_HighFidelity(){
+    std::cout <<"[test_HighFidelity]--------------TEST STARTED--------------\n";
+
+    std::cout <<"[test_HighFidelity]-----Error Reading\n";
+    std::vector<int> testVector1 = {0,1,0,0,0,1,1,1,1,0,1,0};//1146
+    
+    int expectedOutput = 3;
+    int actualOutput = convertBitsToAmp(testVector1);
+    assert(expectedOutput == actualOutput);
+
+    std::cout <<"[test_HighFidelity]-----Converting Result\n";
+    std::cout <<"[test_HighFidelity]--------------TEST OK--------------\n";
+}

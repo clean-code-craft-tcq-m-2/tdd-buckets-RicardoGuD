@@ -8,3 +8,4 @@
 void test_outputString();
 void test_rangesDetection();
 void test_countMeasurenments();
+void test_HighFidelity();

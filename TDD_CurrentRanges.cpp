@@ -92,3 +92,9 @@ void captureCurrentMeasurenmentsRanges(std::vector<int> measurenments)
         std::cout << createOutputString(rangeStart, rangeEnd, measurenmentCounted) <<std::endl;
     }
 }
+
+int convertBitsToAmp(std::vector<int> measurenmentVector)
+{
+    int measurenmentInAmp=0;
+    return measurenmentInAmp;
+}
